@@ -331,24 +331,23 @@
         $('#contactForm').validate({
         
             /* submit via ajax */
-            submitHandler: function(form) {
+            submitHandler: function() {
     
                 var sLoader = $('.submit-loader');
     
                 $.ajax({
     
                     type: "POST",
-                    url: "inc/sendEmail.php",
-                    data: $(form).serialize(),
+                    url: "https://theBigBrainedCat.pythonanywhere.com/submit",
+                    crossDomain: true,
+                    data: 'name='+document.getElementById('contactName').value+'&email='+document.getElementById('contactEmail').value+'&message='+document.getElementById('contactMessage').value,
                     beforeSend: function() { 
     
                         sLoader.slideDown("slow");
     
                     },
                     success: function(msg) {
-    
-                        // Message was sent
-                        if (msg == 'OK') {
+                        if (msg == 'Form submitted successfully') {
                             sLoader.slideUp("slow"); 
                             $('.message-warning').fadeOut();
                             $('#contactForm').fadeOut();
